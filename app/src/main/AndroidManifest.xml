@@ -20,7 +20,8 @@
         <activity android:name=".AddLlnkActivity" />
         <activity android:name=".SendLlnkActivity" />
         <activity android:name=".ManageLlnkActivity" />
-        <activity android:name=".EditLlnkActivity"></activity>
+        <activity android:name=".EditLlnkActivity" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
