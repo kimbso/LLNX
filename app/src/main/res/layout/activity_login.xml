@@ -30,12 +30,12 @@
             android:text="Username:"
             android:textSize="20sp"/>
         <EditText
-            android:id="@+id/username"/>
+            android:id="@+id/l_username"/>
         <TextView
             android:text="Password:"
             android:textSize="20sp"/>
         <EditText
-            android:id="@+id/password"/>
+            android:id="@+id/l_password"/>
     </GridLayout>
 
     <LinearLayout
