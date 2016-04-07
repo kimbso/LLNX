@@ -1,5 +1,8 @@
 package com.minkim.llnx;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.*;
@@ -12,10 +15,10 @@ import java.util.*;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    String u = "fakeuser";
-    String p = "fakepswd";
     EditText username, password;
     Button login;
+    SQLiteDatabase sampleDB = null;
+
 
     Intent myIntent;
 
@@ -29,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = (Button) findViewById(R.id.loginButton);
 
         login.setOnClickListener(this);
+        createDatabase();
     }
 
     @Override
@@ -36,17 +40,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Bundle myBundle = new Bundle();
         String user = String.valueOf(username.getText());
         String pswd = String.valueOf(password.getText());
-        if (user.equals(u) && pswd.equals(p)) {
-            username.setText("worked");
-            myBundle.putString("login", "true");
-            setResult(Activity.RESULT_OK, myIntent);
-            finish();
+        if (check(user, pswd))
+            myBundle.putString("LoggedIn", "true");
+        else
+            myBundle.putString("LoggedIn", "false");
+        myIntent.putExtras(myBundle);
+        setResult(Activity.RESULT_OK, myIntent);
+        finish();
+    }
+
+    public boolean check(String user, String pass){
+        String query = "Select count(*) from loginTable " +
+                "where User = " + user + " and Password = " + pass + ";";
+        Cursor cursor = sampleDB.rawQuery(query, null);
+        Log.i("in check", "ss");
+        if (cursor == null)
+            return false;
+        Log.i("check", "true");
+        return true;
+
+    }
+
+    //          CREATE DATABASE STUFF
+    public void createDatabase(){
+        try{
+            sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
+            createLoginTable();
+        }catch(SQLiteException se) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
         }
-        else {
-            username.setText("unauthorized");
-            myBundle.putString("login", "true");
-            setResult(Activity.RESULT_OK, myIntent);
-            finish();
-        }
+    }
+    private void createLoginTable() {
+        String tableName = "loginTable";
+        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
+                " (UserID integer primary key autoincrement not null, " +
+                "  User VARCHAR, " +
+                "  Password VARCHAR;");
+        Log.i("Created Login Table", "Done");
     }
 }

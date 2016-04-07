@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public Button login, register, facebook;
     public boolean loggedIn = false;
-    SQLiteDatabase sampleDB = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         facebook.setOnClickListener(this);
-
     }
 
     @Override
@@ -77,20 +75,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //          CREATE DATABASE STUFF
-    public void createDatabase(){
-        try{
-            sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
-            createLoginTable();
-        }catch(SQLiteException se) {
-            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
-        }
-    }
-    private void createLoginTable() {
-        String tableName = "loginTable";
-        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
-                " (User VARCHAR, " +
-                "  Password VARCHAR ");
-        Log.i("Created Table", "Done");
-    }
+
 }
