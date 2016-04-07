@@ -20,8 +20,13 @@
         <activity android:name=".AddLlnkActivity" />
         <activity android:name=".SendLlnkActivity" />
         <activity android:name=".ManageLlnkActivity" />
+<<<<<<< HEAD
         <activity android:name=".EditLlnkActivity" />
+        <activity android:name=".RegisterActivity"/>
         <activity android:name=".LoginActivity"></activity>
+=======
+        <activity android:name=".EditLlnkActivity"></activity>
+>>>>>>> origin/master
     </application>
 
 </manifest>

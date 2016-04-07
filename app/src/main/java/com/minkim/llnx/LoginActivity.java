@@ -19,9 +19,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button login;
     SQLiteDatabase sampleDB = null;
 
-
-    Intent myIntent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        Intent myIntent = new Intent();
         Bundle myBundle = new Bundle();
         String user = String.valueOf(username.getText());
         String pswd = String.valueOf(password.getText());
@@ -50,15 +48,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public boolean check(String user, String pass){
-        String query = "Select count(*) from loginTable " +
-                "where User = " + user + " and Password = " + pass + ";";
+        String query = "Select * from loginTable " +
+                "where User = '" + user + "' and Password = '" + pass + "';";
         Cursor cursor = sampleDB.rawQuery(query, null);
         Log.i("in check", "ss");
         if (cursor == null)
             return false;
         Log.i("check", "true");
         return true;
-
     }
 
     //          CREATE DATABASE STUFF
@@ -72,10 +69,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     private void createLoginTable() {
         String tableName = "loginTable";
+        Log.i("Created Login Table", "Done");
         sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
                 " (UserID integer primary key autoincrement not null, " +
                 "  User VARCHAR, " +
-                "  Password VARCHAR;");
+                "  Password VARCHAR);");
         Log.i("Created Login Table", "Done");
     }
 }

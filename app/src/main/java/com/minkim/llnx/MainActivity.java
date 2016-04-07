@@ -1,24 +1,23 @@
 package com.minkim.llnx;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.*;
-import android.content.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
 
+<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button login, register, facebook;
     public boolean loggedIn = false;
+    SQLiteDatabase sampleDB = null;
+=======
+public class MainActivity extends AppCompatActivity {
+>>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
         login       = (Button) findViewById(R.id.login);
         register    = (Button) findViewById(R.id.register);
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         facebook.setOnClickListener(this);
+        createDatabase();
     }
 
     @Override
@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void register() {
-
+        Intent registerActivity = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivityForResult(registerActivity, 100);
+        Log.i("onactivityresult", "here");
     }
 
     public void facebook() {
@@ -73,7 +75,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    public void createDatabase(){
+        try{
+            sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
+            createLoginTable();
+        }catch(SQLiteException se) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
+        }
+    }
+    private void createLoginTable() {
+        String tableName = "loginTable";
+        Log.i("Created Login Table", "Done");
+        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
+                " (UserID integer primary key autoincrement not null, " +
+                "  User VARCHAR, " +
+                "  Password VARCHAR);");
+        Log.i("Created Login Table", "Done");
+    }
 
 
-
+=======
+    }
+>>>>>>> origin/master
 }
