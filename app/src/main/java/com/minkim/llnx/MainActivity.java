@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button login, register, facebook;
@@ -12,11 +13,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 =======
 public class MainActivity extends AppCompatActivity {
 >>>>>>> origin/master
+=======
+public class MainActivity extends AppCompatActivity {
+>>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         login       = (Button) findViewById(R.id.login);
@@ -94,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+=======
+    }
+>>>>>>> origin/master
 =======
     }
 >>>>>>> origin/master
