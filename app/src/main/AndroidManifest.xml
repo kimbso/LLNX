@@ -23,7 +23,6 @@
         <activity android:name=".EditLlnkActivity" />
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".EditLlnkActivity"></activity>
     </application>
 
 </manifest>
