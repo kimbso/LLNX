@@ -1,5 +1,7 @@
 package com.minkim.llnx;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.*;
@@ -7,13 +9,12 @@ import android.content.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
-import java.io.*;
-import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button login, register, facebook;
     public boolean loggedIn = false;
+    SQLiteDatabase sampleDB = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("onactivityresult", "here");
     }
 
+
+
     public void register() {
 
     }
@@ -71,5 +74,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.i("ERROR", "Issue in the onActivityResult");
         }
 
+    }
+
+
+    //          CREATE DATABASE STUFF
+    public void createDatabase(){
+        try{
+            sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
+            createLoginTable();
+        }catch(SQLiteException se) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
+        }
+    }
+    private void createLoginTable() {
+        String tableName = "loginTable";
+        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
+                " (User VARCHAR, " +
+                "  Password VARCHAR ");
+        Log.i("Created Table", "Done");
     }
 }
