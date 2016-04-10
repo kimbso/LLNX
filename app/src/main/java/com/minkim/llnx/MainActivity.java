@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
             createLoginTable();
+            createLLNXTable();
         } catch (SQLiteException se) {
             Log.e(getClass().getSimpleName(), "Could not create or Open the database");
         }
@@ -87,11 +88,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void createLoginTable() {
         String tableName = "loginTable";
-        Log.i("Created Login Table", "Done");
         sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
                 " (UserID integer primary key autoincrement not null, " +
                 "  User VARCHAR, " +
                 "  Password VARCHAR);");
         Log.i("Created Login Table", "Done");
+    }
+
+    private void createLLNXTable(){
+        String tableName = "LLNXTable";
+        sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
+                " (LLNXID integer primary key autoincrement not null, " +
+                "   Owner integer, " +
+                "   Recipient integer);");
+        Log.i("Created LLNX Table", "Done");
     }
 }

@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText username, password;
     Button login, back;
     SQLiteDatabase sampleDB = null;
-
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String user = String.valueOf(username.getText());
         String pswd = String.valueOf(password.getText());
         if (check(user, pswd)) {
+            Log.i("ID", String.valueOf(id));
             login();
         }
         else {
@@ -58,18 +59,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.i("cursor", String.valueOf(cursor.getCount()));
             cursor.moveToFirst();
             while(cursor.moveToNext()){
+                id = cursor.getInt(cursor.getColumnIndex("UserID"));
                 Log.i("cursor", cursor.getString(0));
             }
         }
-        if (cursor.getCount() == 0)
+        if (cursor.getCount() > 0)
             return false;
         Log.i("check", "true");
         return true;
     }
 
     public void login() {
-        Intent loginActivity = new Intent(LoginActivity.this, ManageLlnkActivity.class);
+        Intent loginActivity = new Intent(LoginActivity.this, AddFriendActivity.class);
+        Bundle myBundle = new Bundle();
+        myBundle.putInt("ID", id);
+        loginActivity.putExtras(myBundle);
         startActivityForResult(loginActivity, 100);
+
         Log.i("login success", "here");
     }
 
