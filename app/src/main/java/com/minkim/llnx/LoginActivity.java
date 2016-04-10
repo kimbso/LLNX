@@ -16,7 +16,7 @@ import java.util.*;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText username, password;
-    Button login;
+    Button login, back;
     SQLiteDatabase sampleDB = null;
 
     @Override
@@ -24,39 +24,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username = (EditText) findViewById(R.id.l_username);
-        password = (EditText) findViewById(R.id.l_password);
-        login = (Button) findViewById(R.id.loginButton);
+        username    = (EditText) findViewById(R.id.l_username);
+        password    = (EditText) findViewById(R.id.l_password);
+        login       = (Button) findViewById(R.id.loginButton);
+        back        = (Button) findViewById(R.id.back);
 
         login.setOnClickListener(this);
+        back.setOnClickListener(this);
         createDatabase();
     }
 
     @Override
     public void onClick(View v) {
-        Intent myIntent = new Intent();
-        Bundle myBundle = new Bundle();
+        if(v.getId() == R.id.back){
+            finish();
+            return;
+        }
         String user = String.valueOf(username.getText());
         String pswd = String.valueOf(password.getText());
-        if (check(user, pswd))
-            myBundle.putString("LoggedIn", "true");
-        else
-            myBundle.putString("LoggedIn", "false");
-        myIntent.putExtras(myBundle);
-        setResult(Activity.RESULT_OK, myIntent);
-        finish();
+        if (check(user, pswd)) {
+            login();
+        }
+        else {
+            Toast.makeText(this, "Incorrect user/pass", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean check(String user, String pass){
         String query = "Select * from loginTable " +
                 "where User = '" + user + "' and Password = '" + pass + "';";
         Cursor cursor = sampleDB.rawQuery(query, null);
-        Log.i("in check", "ss");
-        if (cursor == null)
+        if (cursor != null){
+            Log.i("cursor", String.valueOf(cursor.getCount()));
+            cursor.moveToFirst();
+            while(cursor.moveToNext()){
+                Log.i("cursor", cursor.getString(0));
+            }
+        }
+        if (cursor.getCount() == 0)
             return false;
         Log.i("check", "true");
         return true;
     }
+
+    public void login() {
+        Intent loginActivity = new Intent(LoginActivity.this, ManageLlnkActivity.class);
+        startActivityForResult(loginActivity, 100);
+        Log.i("login success", "here");
+    }
+
 
     //          CREATE DATABASE STUFF
     public void createDatabase(){

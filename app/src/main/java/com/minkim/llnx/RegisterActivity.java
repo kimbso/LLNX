@@ -37,6 +37,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         register.setOnClickListener(this);
         createDatabase();
     }
+    public void onResume(){
+        super.onResume();
+        String query = "Select * from loginTable";
+        Cursor c = sampleDB.rawQuery(query, null);
+        if (c != null){
+            while (c.moveToNext()){
+                Log.i(String.valueOf(c.getColumnCount()), c.getString(0));
+            }
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -66,7 +76,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return false;
         }
         String query = "Select * from loginTable where User = '" + user+"'";
+        Log.i("query", query);
         cursor = sampleDB.rawQuery(query, null);
+        Log.i("cursor", String.valueOf(cursor.getCount()));
+        if (cursor != null){
+            cursor.moveToFirst();
+            while(cursor.moveToNext()){
+                Log.i("cursor register", cursor.getString(0));
+            }
+        }
         if (cursor.getCount() == 0){
             toast = Toast.makeText(this,"Registered", Toast.LENGTH_SHORT);
             toast.show();
@@ -94,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
     private void createLoginTable() {
         String tableName = "loginTable";
-        Log.i("Created Login Table", "Done");
         sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName +
                 " (UserID integer primary key autoincrement not null, " +
                 "  User VARCHAR, " +
