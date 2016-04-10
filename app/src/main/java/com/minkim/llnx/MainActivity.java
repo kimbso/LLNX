@@ -2,31 +2,26 @@ package com.minkim.llnx;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.content.*;
+import android.util.*;
+import android.widget.*;
+import android.database.sqlite.*;
+import android.view.View;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public Button login, register, facebook;
     public boolean loggedIn = false;
     SQLiteDatabase sampleDB = null;
-=======
-public class MainActivity extends AppCompatActivity {
->>>>>>> origin/master
-=======
-public class MainActivity extends AppCompatActivity {
->>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-        login       = (Button) findViewById(R.id.login);
-        register    = (Button) findViewById(R.id.register);
-        facebook    = (Button) findViewById(R.id.facebook);
+        login = (Button) findViewById(R.id.login);
+        register = (Button) findViewById(R.id.register);
+        facebook = (Button) findViewById(R.id.facebook);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -58,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void register() {
         Intent registerActivity = new Intent(MainActivity.this, RegisterActivity.class);
         startActivityForResult(registerActivity, 100);
@@ -80,14 +74,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public void createDatabase(){
-        try{
+
+    public void createDatabase() {
+        try {
             sampleDB = openOrCreateDatabase("NAME", MODE_PRIVATE, null);
             createLoginTable();
-        }catch(SQLiteException se) {
+        } catch (SQLiteException se) {
             Log.e(getClass().getSimpleName(), "Could not create or Open the database");
         }
     }
+
     private void createLoginTable() {
         String tableName = "loginTable";
         Log.i("Created Login Table", "Done");
@@ -97,12 +93,4 @@ public class MainActivity extends AppCompatActivity {
                 "  Password VARCHAR);");
         Log.i("Created Login Table", "Done");
     }
-
-
-=======
-    }
->>>>>>> origin/master
-=======
-    }
->>>>>>> origin/master
 }
